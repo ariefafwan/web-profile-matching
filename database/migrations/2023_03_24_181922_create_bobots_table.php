@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('bobots', function (Blueprint $table) {
             $table->id();
+            $table->float('selisih');
+            $table->float('bobot');
+            $table->string('ket');
             $table->timestamps();
         });
     }

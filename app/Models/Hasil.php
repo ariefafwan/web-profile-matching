@@ -5,11 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pertanyaan extends Model
+class Hasil extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $with = ['aspek', 'kriteria'];
+    protected $with = ['pegawai', 'aspek', 'kriteria', 'bobot'];
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class);
+    }
 
     public function aspek()
     {
@@ -19,5 +24,10 @@ class Pertanyaan extends Model
     public function kriteria()
     {
         return $this->belongsTo(Kriteria::class);
+    }
+
+    public function bobot()
+    {
+        return $this->belongsTo(Bobot::class);
     }
 }

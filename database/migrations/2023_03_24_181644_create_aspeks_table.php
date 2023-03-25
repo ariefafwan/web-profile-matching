@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('aspeks', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->bigInteger('cf');
+            $table->bigInteger('sf');
             $table->timestamps();
         });
     }
