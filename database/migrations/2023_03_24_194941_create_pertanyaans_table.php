@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('pertanyaans', function (Blueprint $table) {
             $table->id();
+            $table->bigIncrements('aspek_id');
+            $table->foreign('aspek_id')->references('id')->on('aspeks')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigIncrements('kriteria_id');
+            $table->foreign('kriteria_id')->references('id')->on('kriterias')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('nilai');
+            $table->string('ket');
             $table->timestamps();
         });
     }
