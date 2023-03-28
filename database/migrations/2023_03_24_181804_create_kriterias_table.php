@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('kriterias', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('aspek_id');
+            $table->bigInteger('aspek_id')->unsigned();
             $table->foreign('aspek_id')->references('id')->on('aspeks')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('jenis');

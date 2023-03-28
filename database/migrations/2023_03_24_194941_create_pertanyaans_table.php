@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('pertanyaans', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('aspek_id');
+            $table->bigInteger('aspek_id')->unsigned();
             $table->foreign('aspek_id')->references('id')->on('aspeks')->onDelete('cascade')->onUpdate('cascade');
-            $table->bigIncrements('kriteria_id');
+            $table->bigInteger('kriteria_id')->unsigned();
             $table->foreign('kriteria_id')->references('id')->on('kriterias')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('nilai');
             $table->string('ket');
