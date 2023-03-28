@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('gender');
+            $table->bigInteger('nmrhp');
+            $table->string('alamat');
             $table->timestamps();
         });
     }
