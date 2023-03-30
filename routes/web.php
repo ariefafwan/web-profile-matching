@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,14 +32,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('admin/seluruhaspek', [AdminController::class, 'seluruhaspek'])->name('seluruhaspek');
             Route::get('admin/createaspek', [AdminController::class, 'createaspek'])->name('createaspek');
             Route::post('admin/createaspek', [AdminController::class, 'storeaspek'])->name('storeaspek');
-            Route::get('admin/editaspek', [AdminController::class, 'editaspek'])->name('editaspek');
+            Route::get('admin/editaspek/{id}', [AdminController::class, 'editaspek'])->name('editaspek');
             Route::post('admin/editaspek/{id}/update', [AdminController::class, 'updateaspek'])->name('updateaspek');
             Route::post('admin/editaspek/{id}/destroy', [AdminController::class, 'destroyaspek'])->name('destroyaspek');
             //Krietria
             Route::get('admin/kriteria', [AdminController::class, 'kriteria'])->name('kriteria');
             Route::get('admin/createkriteria', [AdminController::class, 'createkriteria'])->name('createkriteria');
             Route::post('admin/createkriteria', [AdminController::class, 'storekriteria'])->name('storekriteria');
-            Route::get('admin/editkriteria', [AdminController::class, 'editkriteria'])->name('editkriteria');
+            Route::get('admin/editkriteria/{id}', [AdminController::class, 'editkriteria'])->name('editkriteria');
             Route::post('admin/editkriteria/{id}/update', [AdminController::class, 'updatekriteria'])->name('updatekriteria');
             Route::post('admin/editkriteria/{id}/destroy', [AdminController::class, 'destroykriteria'])->name('destroykriteria');
             //Pegawai
@@ -52,3 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

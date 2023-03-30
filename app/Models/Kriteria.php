@@ -20,4 +20,13 @@ class Kriteria extends Model
     {
         return $this->belongsTo(Aspek::class);
     }
+
+    public function getJenisNameAttribute()
+    {
+        $jenis = $this->jenis;
+        if ($jenis == "cf") {
+            return 'Core Factor';
+        }
+            return 'Secondary Factor';
+    }
 }

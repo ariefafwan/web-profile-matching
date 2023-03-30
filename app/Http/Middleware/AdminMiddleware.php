@@ -23,8 +23,7 @@ class AdminMiddleware
             apa yang ingin kamu lakukan jika rolenya tidak sesuai
             */
             return redirect()->to('/home');
-        
-        return $next($request);
         }
+        return $next($request);
     }
 }

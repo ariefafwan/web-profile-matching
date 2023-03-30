@@ -17,14 +17,13 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role_id != "2") {
+        if (Auth::user()->role_id != "3") {
             /* 
             silahkan modifikasi pada bagian ini
             apa yang ingin kamu lakukan jika rolenya tidak sesuai
             */
             return redirect()->to('/home');
-        
-        return $next($request);
         }
+        return $next($request);
     }
 }
