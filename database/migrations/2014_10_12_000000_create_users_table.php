@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('profile_img')->default('profil_img.jpg')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('gender')->nullable();
+            $table->bigInteger('nmrhp')->nullable();
+            $table->string('alamat')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

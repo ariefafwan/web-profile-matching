@@ -302,16 +302,12 @@ return [
         ],
 
         // Sidebar items:
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'admin',
-        // ],
         ['header' => 'Dashboard'],
         [
-            'text' => 'profile',
+            'text' => 'Profile',
             'route'  => 'home',
             'icon' => 'fas fa-fw fa fa-cog',
+            'can'   => 'admin',
         ],
         [
             'text'        => 'Dashboard',
@@ -320,11 +316,25 @@ return [
             'label_color' => 'success',
             'can'  => 'admin',
         ],
+        [
+            'text'        => 'Dashboard',
+            'route'       => 'user',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'label_color' => 'success',
+            'can'         => 'user',
+        ],
         ['header' => 'Pegawai'],
         [
             'text' => 'Daftar Pegawai',
             'route'  => 'home',
             'icon' => 'fas fa-fw fa-user',
+            'can'   => 'admin',
+        ],
+        [
+            'text' => 'Profile',
+            'route'  => 'profile.index',
+            'icon' => 'fas fa-fw fa fa-cog',
+            'can'   => 'user',
         ],
         ['header' => 'Menu'],
         [
@@ -352,7 +362,6 @@ return [
                     'icon' => 'fas fa-fw fa-random',
                     'route'  => 'home',
                 ],
-                
             ],
         ],
         [
@@ -361,6 +370,13 @@ return [
             'icon'        => 'fas fa-fw fa-chart-bar',
             'label_color' => 'success',
             'can'         => 'admin',
+        ],
+        [
+            'text'        => 'Hasil Evaluasi Anda',
+            'route'       => 'home',
+            'icon'        => 'fas fa-fw fa-chart-bar',
+            'label_color' => 'success',
+            'can'         => 'user',
         ],
     ],
 

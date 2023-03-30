@@ -22,6 +22,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'profile_img',
+        'gender',
+        'nmrhp',
+        'alamat',
     ];
 
     /**
@@ -49,6 +54,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function hasil()
+    {
+        return $this->hasMany(Hasil::class);
     }
 
     public function adminlte_image()
