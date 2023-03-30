@@ -9,11 +9,11 @@ class Hasil extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $with = ['pegawai', 'aspek', 'kriteria', 'bobot'];
+    protected $with = ['user', 'aspek', 'kriteria', 'bobot'];
 
-    public function pegawai()
+    public function user()
     {
-        return $this->belongsTo(Pegawai::class);
+        return $this->belongsTo(User::class);
     }
 
     public function aspek()

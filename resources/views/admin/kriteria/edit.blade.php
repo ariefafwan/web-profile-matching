@@ -5,7 +5,6 @@
         <!-- Begin Page Content -->
     <div class="container-fluid">
 
-
             <!-- Content -->
             <form action="{{ route('updatekriteria', $kriteria->id) }}" method="POST" enctype="multipart/form-data">
             @csrf

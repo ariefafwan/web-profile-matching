@@ -23,7 +23,6 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('user', 'page', 'dt1'));
     }
 
-
     //Aspek
     public function seluruhaspek()
     {
@@ -40,7 +39,6 @@ class AdminController extends Controller
         $aspek = Aspek::latest()->paginate(10);
         return view('admin.aspek.create', compact('user', 'aspek', 'page'));
     }
-
 
     public function storeaspek(Request $request)
     {
@@ -89,7 +87,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $page = "Seluruh Pegawai";
-        $pegawai = Pegawai::latest()->paginate(10);
+        $pegawai = User::latest()->paginate(10);
         return view('admin.pegawai.pegawai', compact('user', 'pegawai', 'page'));
     }
 
