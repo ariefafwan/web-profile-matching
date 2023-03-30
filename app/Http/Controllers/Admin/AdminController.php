@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Aspek;
+use App\Models\Bobot;
 use App\Models\Kriteria;
 use App\Models\Pegawai;
 use App\Models\User;
@@ -154,5 +155,14 @@ class AdminController extends Controller
         
         Alert::success('Informasi Pesan!', 'Kriteria Berhasil dihapus!');
         return back();
+    }
+
+    //bobot selisih
+    public function bobot()
+    {
+        $user = Auth::user();
+        $page = "Bobot Selisih Penilaian";
+        $bobot = Bobot::all();
+        return view('admin.bobot.bobot', compact('user', 'page', 'bobot'));
     }
 }
