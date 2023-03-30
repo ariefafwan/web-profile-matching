@@ -1,10 +1,9 @@
 @extends('admin.app')
 
 @section('content')
-    <section class="content">
-        <!-- Begin Page Content -->
+<section class="content">
+    <!-- Begin Page Content -->
     <div class="container-fluid">
-
         <!-- Content Row -->
         <div class="row">
 
@@ -61,8 +60,10 @@
                         </div>
                     </div>
                 </div>
-            
+        
+        <!-- End Content Row -->
         </div>
+    <!-- End Page Content -->
     </div>
-    </section>
+</section>
 @stop

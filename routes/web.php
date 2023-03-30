@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('admin/editkriteria/{id}/update', [AdminController::class, 'updatekriteria'])->name('updatekriteria');
             Route::post('admin/editkriteria/{id}/destroy', [AdminController::class, 'destroykriteria'])->name('destroykriteria');
             //Pegawai
+            Route::resource('admin/pegagwai', PegawaiController::class);
+            //Bobot
+            Route::get('admin/bobot', [AdminController::class, 'bobot'])->name('bobot');
         });
 
         //Middleware User

@@ -343,12 +343,12 @@ return [
                     'route'  => 'kriteria',
                 ],
                 [
-                    'text' => 'Bobot',
+                    'text' => 'Bobot Selisih',
                     'icon' => 'fas fa-fw fa-balance-scale',
-                    'route'  => 'home',
+                    'route'  => 'bobot',
                 ],
                 [
-                    'text' => 'Selisih',
+                    'text' => 'Pertanyaan',
                     'icon' => 'fas fa-fw fa-random',
                     'route'  => 'home',
                 ],
