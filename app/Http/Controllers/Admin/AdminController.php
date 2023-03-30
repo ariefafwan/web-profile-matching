@@ -98,7 +98,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $page = "Sub Kriteria Penilaian";
-        $kriteria = Kriteria::all();
+        $kriteria = Kriteria::latest()->paginate(10);
         return view('admin.kriteria.kriteria', compact('user', 'page', 'kriteria'));
     }
 
@@ -106,8 +106,9 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $page = "Tambah Kriteria";
+        $aspek = Aspek::all();
         $kriteria = Kriteria::latest()->paginate(10);
-        return view('admin.kriteria.create', compact('user', 'kriteria', 'page'));
+        return view('admin.kriteria.create', compact('user', 'kriteria', 'page', 'aspek'));
     }
 
 
@@ -129,7 +130,8 @@ class AdminController extends Controller
         $user = Auth::user();
         $page = "Edit Kriteria";
         $kriteria = Kriteria::findOrFail($id);
-        return view('admin.kriteria.edit', compact('user', 'kriteria', 'page'));
+        $aspek = Aspek::all();
+        return view('admin.kriteria.edit', compact('user', 'kriteria', 'page', 'aspek'));
     }
 
     public function updatekriteria(Request $request, $id)

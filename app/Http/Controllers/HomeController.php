@@ -32,4 +32,10 @@ class HomeController extends Controller
         }
         return redirect()->to('login');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }

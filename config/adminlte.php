@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'SPK PROFILE MATCHING',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => 'Profile Matching',
+    'logo_img' => 'vendor/adminlte/dist/img/suntuk.jpeg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -83,16 +83,16 @@ return [
     |
     */
 
-    'auth_logo' => [
-        'enabled' => false,
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
-            'class' => '',
-            'width' => 50,
-            'height' => 50,
-        ],
-    ],
+    // 'auth_logo' => [
+    //     'enabled' => false,
+    //     'img' => [
+    //         'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    //         'alt' => 'Auth Logo',
+    //         'class' => '',
+    //         'width' => 50,
+    //         'height' => 50,
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -109,11 +109,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'vendor/adminlte/dist/img/loading.png',
+            'alt' => 'Loading',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 200,
+            'height' => 160,
         ],
     ],
 
@@ -130,9 +130,9 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
+    'usermenu_header' => true,
+    'usermenu_header_class' => 'bg-primary bg-gradient',
+    'usermenu_image' => true,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
 
@@ -252,7 +252,7 @@ return [
     |
     */
 
-    'use_route_url' => false,
+    'use_route_url' => true,
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
@@ -294,7 +294,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -302,86 +302,65 @@ return [
         ],
 
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        // [
+        //     'text' => 'blog',
+        //     'url'  => 'admin/blog',
+        //     'can'  => 'admin',
+        // ],
+        ['header' => 'Dashboard'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'route'  => 'home',
+            'icon' => 'fas fa-fw fa fa-cog',
+        ],
+        [
+            'text'        => 'Dashboard',
+            'route'       => 'admin',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'label_color' => 'success',
+            'can'  => 'admin',
+        ],
+        ['header' => 'Pegawai'],
+        [
+            'text' => 'Daftar Pegawai',
+            'route'  => 'home',
             'icon' => 'fas fa-fw fa-user',
         ],
+        ['header' => 'Menu'],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text'    => 'Menu',
+            'icon'    => 'fas fa-fw fa fa-bars',
+            'can'  =>  'admin',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Aspek Kriteria',
+                    'icon' => 'fas fa-fw fa-book',
+                    'route'  => 'seluruhaspek',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Sub Kriteria',
+                    'icon' => 'fas fa-fw fa-filter',
+                    'route'  => 'kriteria',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Bobot',
+                    'icon' => 'fas fa-fw fa-balance-scale',
+                    'route'  => 'home',
                 ],
+                [
+                    'text' => 'Selisih',
+                    'icon' => 'fas fa-fw fa-random',
+                    'route'  => 'home',
+                ],
+                
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'text'        => 'Hasil Evaluasi',
+            'route'       => 'home',
+            'icon'        => 'fas fa-fw fa-chart-bar',
+            'label_color' => 'success',
+            'can'         => 'admin',
         ],
     ],
 
