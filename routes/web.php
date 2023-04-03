@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\PegawaiController;
+use App\Http\Controllers\Admin\PertanyaanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
@@ -45,10 +45,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('admin/editkriteria/{id}', [AdminController::class, 'editkriteria'])->name('editkriteria');
             Route::post('admin/editkriteria/{id}/update', [AdminController::class, 'updatekriteria'])->name('updatekriteria');
             Route::post('admin/editkriteria/{id}/destroy', [AdminController::class, 'destroykriteria'])->name('destroykriteria');
-            //Pegawai
-            Route::resource('admin/pegagwai', PegawaiController::class);
+            //Pertanyaan
+            Route::resource('admin/pertanyaan', PertanyaanController::class);
+            Route::get('getkriteria/{id}', [AdminController::class, 'getkriteria']);
             //Bobot
             Route::get('admin/bobot', [AdminController::class, 'bobot'])->name('bobot');
+            //Hasil
+            Route::get('getpertanyaan/{id}', [AdminController::class, 'getpertanyaan']);
+            Route::get('admin/hasil/create', [AdminController::class, 'hasil'])->name('tambahhasil');
         });
 
         //Middleware User
