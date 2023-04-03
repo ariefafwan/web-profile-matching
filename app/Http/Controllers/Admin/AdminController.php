@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Aspek;
 use App\Models\Bobot;
+use App\Models\Hasil;
 use App\Models\Kriteria;
 use App\Models\Pegawai;
+use App\Models\Pertanyaan;
 use App\Models\User;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -74,8 +76,8 @@ class AdminController extends Controller
 
     public function destroyaspek($id)
     {
-        $author = Aspek::findOrFail($id);
-        $author->delete();
+        $aspek = Aspek::findOrFail($id);
+        $aspek->delete();
         
         Alert::success('Informasi Pesan!', 'Aspek Berhasil dihapus!');
         return back();
@@ -148,8 +150,8 @@ class AdminController extends Controller
 
     public function destroykriteria($id)
     {
-        $author = Kriteria::findOrFail($id);
-        $author->delete();
+        $kriteria = Kriteria::findOrFail($id);
+        $kriteria->delete();
         
         Alert::success('Informasi Pesan!', 'Kriteria Berhasil dihapus!');
         return back();
@@ -162,5 +164,35 @@ class AdminController extends Controller
         $page = "Bobot Selisih Penilaian";
         $bobot = Bobot::all();
         return view('admin.bobot.bobot', compact('user', 'page', 'bobot'));
+    }
+
+    //Get Kriteria
+    public function getkriteria($id)
+    {
+        $kriteria = Kriteria::where("aspek_id",$id)->pluck('name','id');
+        return json_encode($kriteria);
+        // dd($kriteria);
+    }
+
+    //Get Pertanyaan
+    public function getpertanyaan($id)
+    {
+        $pertanyaan = Kriteria::where("kriteria_id",$id)->pluck('name','id');
+        return json_encode($pertanyaan);
+        // dd($pertanyaan);
+    }
+
+    //Tambah Hasil Penilaian
+    public function hasil(Request $request)
+    {
+        $user = Auth::user()->id;
+        $hasil = Hasil::latest()->paginate(10);
+        $grup = User::all()->where('role_id', '2');
+        $page = "Tambah Evaluasi Penilaian";
+        $bobot = Bobot::all();
+        $aspek = Aspek::pluck('name','id');
+        $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
+        $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
+        return view('admin.hasil.create', compact('user', 'page', 'bobot', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
     }
 }

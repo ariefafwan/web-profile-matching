@@ -56,6 +56,9 @@
                                     </tbody>
 
                                 </table>
+                                <div class="d-flex justify-content-center">
+                                    {{ $kriteria->links() }}
+                            </div>
                             </div>
                         </div>
                     </div>

@@ -358,11 +358,18 @@ return [
                     'route'  => 'bobot',
                 ],
                 [
-                    'text' => 'Pertanyaan',
+                    'text' => 'Bobot Pertanyaan',
                     'icon' => 'fas fa-fw fa-random',
-                    'route'  => 'home',
+                    'route'  => 'pertanyaan.index',
                 ],
             ],
+        ],
+        [
+            'text'        => 'Tambah Hasil Evaluasi',
+            'route'       => 'tambahhasil',
+            'icon'        => 'fas fa-fw fa-plus-square',
+            'label_color' => 'success',
+            'can'         => 'admin',
         ],
         [
             'text'        => 'Hasil Evaluasi',

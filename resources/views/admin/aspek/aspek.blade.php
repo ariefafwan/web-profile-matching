@@ -53,8 +53,10 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
+                                <div class="d-flex justify-content-center">
+                                    {{ $aspek->links() }}
+                            </div>
                             </div>
                         </div>
                     </div>
