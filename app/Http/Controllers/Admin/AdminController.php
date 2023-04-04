@@ -177,7 +177,7 @@ class AdminController extends Controller
     //Get Pertanyaan
     public function getpertanyaan($id)
     {
-        $pertanyaan = Kriteria::where("kriteria_id",$id)->pluck('name','id');
+        $pertanyaan = Pertanyaan::where("kriteria_id",$id)->pluck('ket', 'nilai', 'id');
         return json_encode($pertanyaan);
         // dd($pertanyaan);
     }
@@ -189,10 +189,75 @@ class AdminController extends Controller
         $hasil = Hasil::latest()->paginate(10);
         $grup = User::all()->where('role_id', '2');
         $page = "Tambah Evaluasi Penilaian";
-        $bobot = Bobot::all();
         $aspek = Aspek::pluck('name','id');
         $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
         $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
-        return view('admin.hasil.create', compact('user', 'page', 'bobot', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+        return view('admin.hasil.create', compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+    }
+
+    public function storehasil(Request $request)
+    {
+        $dtUpload = new Hasil();
+        $dtUpload->user_id = $request->user_id;
+        $dtUpload->aspek_id = $request->aspek_id;
+        $dtUpload->kriteria_id = $request->kriteria_id;
+        $dtUpload->nilai = $request->nilai;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Hasil Baru Berhasil Ditambahkan');
+        return redirect()->route('tambahhasil');
+    }
+
+    public function evaluasihasil()
+    {
+        $user = Auth::user()->id;
+        $page = "Hasil Evaluasi User";
+        $hasil = Hasil::latest()->paginate(10);
+        return view('admin.hasil.hasil', compact('user', 'page', 'hasil'));
+    }
+
+    public function edithasil(Request $request, $id)
+    {
+        $user = Auth::user()->id;
+        $page = "Edit Evaluasi User";
+        $hasil = Hasil::findOrFail($id);
+        $grup = User::all()->where('role_id', '2');
+        $aspek = Aspek::pluck('name','id');
+        $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
+        $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
+        return view('admin.hasil.edit', compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+    }
+
+    public function updatehasil(Request $request, $id)
+    {
+        $dtUpload = Hasil::findOrFail($id);
+        $dtUpload->user_id = $request->user_id;
+        $dtUpload->aspek_id = $request->aspek_id;
+        $dtUpload->kriteria_id = $request->kriteria_id;
+        $dtUpload->nilai = $request->nilai;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Hasil Berhasil Diedit');
+        return redirect()->route('hasil');
+    }
+
+    public function destroyhasil($id)
+    {
+        $hasil = Hasil::findOrFail($id);
+        $hasil->delete();
+        
+        Alert::success('Informasi Pesan!', 'Hasil Berhasil dihapus!');
+        return back();
+    }
+
+    //Hasil Perhitungan
+    public function perhitungan()
+    {
+        $user = Auth::user()->id;
+        $hasil = Hasil::all();
+        $aspek = Aspek::all();
+        $kriteria = Kriteria::all();
+        return view('admin.hasil.perhitungan', compact('user', 'page', 'hasil', 'aspek', 'kriteria'));
+
     }
 }

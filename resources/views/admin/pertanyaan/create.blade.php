@@ -41,6 +41,7 @@
                 <button type="submit" class="btn btn-primary btn-flat">
                     Tambah
                 </button>
+                </div>
             </div>
             </form>
     </div>
@@ -49,7 +50,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('select[name="aspek_id"]').on('change', function() {
+        $('select[name="aspek_id"]').on('click', function() {
             var aspekID = $(this).val();
             if(aspekID) {
                 $.ajax({
