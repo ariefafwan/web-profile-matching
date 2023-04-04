@@ -373,7 +373,14 @@ return [
         ],
         [
             'text'        => 'Hasil Evaluasi',
-            'route'       => 'home',
+            'route'       => 'hasil',
+            'icon'        => 'fas fa-fw fa-chart-bar',
+            'label_color' => 'success',
+            'can'         => 'admin',
+        ],
+        [
+            'text'        => 'Perhitungan',
+            'route'       => 'hasil',
             'icon'        => 'fas fa-fw fa-chart-bar',
             'label_color' => 'success',
             'can'         => 'admin',

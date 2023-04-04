@@ -53,6 +53,11 @@ Route::middleware(['auth'])->group(function () {
             //Hasil
             Route::get('getpertanyaan/{id}', [AdminController::class, 'getpertanyaan']);
             Route::get('admin/hasil/create', [AdminController::class, 'hasil'])->name('tambahhasil');
+            Route::post('admin/hasil/create', [AdminController::class, 'storehasil'])->name('storehasil');
+            Route::get('admin/hasil/index', [AdminController::class, 'evaluasihasil'])->name('hasil');
+            Route::get('admin/hasil/edit/{id}', [AdminController::class, 'edithasil'])->name('edithasil');
+            Route::post('admin/hasil/edit/{id}/update', [AdminController::class, 'updatehasil'])->name('updatehasil');
+            Route::post('admin/hasil/edit/{id}/destroy', [AdminController::class, 'destroyhasil'])->name('destroyhasil');
         });
 
         //Middleware User
