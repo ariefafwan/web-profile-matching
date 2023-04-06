@@ -58,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('admin/hasil/edit/{id}', [AdminController::class, 'edithasil'])->name('edithasil');
             Route::post('admin/hasil/edit/{id}/update', [AdminController::class, 'updatehasil'])->name('updatehasil');
             Route::post('admin/hasil/edit/{id}/destroy', [AdminController::class, 'destroyhasil'])->name('destroyhasil');
+            //Perhitungan
+            Route::get('admin/perhitungan', [AdminController::class, 'perhitungan'])->name('perhitungan');
+
+            Route::get('admin/test', [AdminController::class, 'test'])->name('test');
         });
 
         //Middleware User

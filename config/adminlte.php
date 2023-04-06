@@ -380,7 +380,7 @@ return [
         ],
         [
             'text'        => 'Perhitungan',
-            'route'       => 'hasil',
+            'route'       => 'perhitungan',
             'icon'        => 'fas fa-fw fa-chart-bar',
             'label_color' => 'success',
             'can'         => 'admin',
