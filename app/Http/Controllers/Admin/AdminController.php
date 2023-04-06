@@ -212,7 +212,7 @@ class AdminController extends Controller
     {
         $user = Auth::user()->id;
         $page = "Hasil Evaluasi User";
-        $hasil = Hasil::latest()->paginate(10);
+        $hasil = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->paginate(10);
         return view('admin.hasil.hasil', compact('user', 'page', 'hasil'));
     }
 
@@ -254,10 +254,33 @@ class AdminController extends Controller
     public function perhitungan()
     {
         $user = Auth::user()->id;
-        $hasil = Hasil::all();
-        $aspek = Aspek::all();
-        $kriteria = Kriteria::all();
-        return view('admin.hasil.perhitungan', compact('user', 'page', 'hasil', 'aspek', 'kriteria'));
+        $username = Hasil::select('user_id')->distinct()->get();
+        $perhitungan = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
+        foreach ($perhitungan as $hitung) {
+            $nilai = $hitung->nilai;
+            $nilasistandart = Kriteria::where('id', $hitung->kriteria_id)->sum('nilai');
+            $selisih = ($nilasistandart - $nilai);
+            $bobot = Bobot::all()->where('selisih', $selisih);
+        }
+        $page = "Perhitungan";
+        $aspek = Aspek::orderBy('id', 'asc')->get();
+        $dt1 = Aspek::get()->count();
+        $kriteria = Kriteria::orderBy('id', 'asc')->get();
+        return view('admin.hasil.perhitungan', 
+            compact('user', 'page', 'perhitungan', 'aspek', 'kriteria', 'username', 'dt1', 'bobot'));
+        // $username = Hasil::select('user_id')->distinct()->get();
+        // dd($username);
+    }
 
+    public function test()
+    {
+        $perhitungan = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
+        foreach ($perhitungan as $hitung) {
+            $nilai = $hitung->nilai;
+            $nilasistandart = Kriteria::where('id', $hitung->kriteria_id)->sum('nilai');
+            $selisih = ($nilasistandart - $nilai);
+            $bobot = Bobot::where('selisih', $selisih)->get();
+            dd($bobot);
+        }
     }
 }
