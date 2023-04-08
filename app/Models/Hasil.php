@@ -10,7 +10,7 @@ class Hasil extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $with = ['user', 'aspek', 'kriteria'];
+    protected $with = ['user', 'aspek', 'kriteria', 'bobot'];
 
     public function user()
     {
@@ -27,14 +27,19 @@ class Hasil extends Model
         return $this->belongsTo(Kriteria::class);
     }
 
-    public function getBobotNameAttribute()
+    public function bobot()
     {
-        $nilai = $this->nilai;
-        $nilasistandart = Kriteria::where('id', $this->kriteria_id)->sum('nilai');
-        $selisih = ($nilasistandart - $nilai);
-        $bobot = Bobot::where('selisih', $selisih)->get('bobot');
-        return $selisih;
+        return $this->belongsTo(Bobot::class);
     }
+
+    // public function getBobotNameAttribute()
+    // {
+    //     $nilai = $this->nilai;
+    //     $nilasistandart = Kriteria::where('id', $this->kriteria_id)->sum('nilai');
+    //     $selisih = ($nilasistandart - $nilai);
+    //     $bobot = Bobot::where('selisih', $selisih)->get('bobot');
+    //     return $selisih;
+    // }
 
     // public function getUsernameAttribute()
     // {

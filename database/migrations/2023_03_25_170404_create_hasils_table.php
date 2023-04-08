@@ -22,6 +22,10 @@ return new class extends Migration
             $table->bigInteger('kriteria_id')->unsigned();
             $table->foreign('kriteria_id')->references('id')->on('kriterias')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('nilai');
+            $table->bigInteger('bobot_id')->unsigned();
+            $table->foreign('bobot_id')->references('id')->on('bobots')->onDelete('cascade')->onUpdate('cascade');
+            $table->float('n_bobot');
+            $table->string('jenis');
             $table->timestamps();
         });
     }
