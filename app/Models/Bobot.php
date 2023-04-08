@@ -9,10 +9,9 @@ class Bobot extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $with = ['hasil'];
 
     public function hasil()
     {
-        return $this->belongsTo(Hasil::class);
+        return $this->hasMany(Hasil::class);
     }
 }

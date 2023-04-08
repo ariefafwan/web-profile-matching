@@ -192,7 +192,15 @@ class AdminController extends Controller
         $aspek = Aspek::pluck('name','id');
         $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
         $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
-        return view('admin.hasil.create', compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+
+        $nilai = $request->nilai;
+        $nilaistandart = Kriteria::where('id', $request->kriteria_id)->sum('nilai');
+        $jenis = Kriteria::where('id', $request->kriteria_id)->get();
+        $selisih = ($nilaistandart - $nilai);
+        $bobot = Bobot::where('selisih', $selisih)->get();
+
+        return view('admin.hasil.create', 
+            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek', 'nilai', 'nilaistandart', 'selisih', 'bobot', 'jenis'));
     }
 
     public function storehasil(Request $request)
@@ -202,6 +210,9 @@ class AdminController extends Controller
         $dtUpload->aspek_id = $request->aspek_id;
         $dtUpload->kriteria_id = $request->kriteria_id;
         $dtUpload->nilai = $request->nilai;
+        $dtUpload->bobot_id = $request->bobot_id;
+        $dtUpload->n_bobot = $request->n_bobot;
+        $dtUpload->jenis = $request->jenis;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Hasil Baru Berhasil Ditambahkan');
@@ -225,7 +236,15 @@ class AdminController extends Controller
         $aspek = Aspek::pluck('name','id');
         $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
         $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
-        return view('admin.hasil.edit', compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+        
+        $nilai = $request->nilai;
+        $nilaistandart = Kriteria::where('id', $request->kriteria_id)->sum('nilai');
+        $jenis = Kriteria::where('id', $request->kriteria_id)->get();
+        $selisih = ($nilaistandart - $nilai);
+        $bobot = Bobot::where('selisih', $selisih)->get();
+
+        return view('admin.hasil.edit', 
+            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek', 'nilai', 'nilaistandart', 'selisih', 'bobot', 'jenis'));
     }
 
     public function updatehasil(Request $request, $id)
@@ -235,6 +254,9 @@ class AdminController extends Controller
         $dtUpload->aspek_id = $request->aspek_id;
         $dtUpload->kriteria_id = $request->kriteria_id;
         $dtUpload->nilai = $request->nilai;
+        $dtUpload->bobot_id = $request->bobot_id;
+        $dtUpload->n_bobot = $request->n_bobot;
+        $dtUpload->jenis = $request->jenis;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Hasil Berhasil Diedit');
@@ -256,31 +278,31 @@ class AdminController extends Controller
         $user = Auth::user()->id;
         $username = Hasil::select('user_id')->distinct()->get();
         $perhitungan = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
-        foreach ($perhitungan as $hitung) {
-            $nilai = $hitung->nilai;
-            $nilasistandart = Kriteria::where('id', $hitung->kriteria_id)->sum('nilai');
-            $selisih = ($nilasistandart - $nilai);
-            $bobot = Bobot::all()->where('selisih', $selisih);
-        }
         $page = "Perhitungan";
         $aspek = Aspek::orderBy('id', 'asc')->get();
         $dt1 = Aspek::get()->count();
         $kriteria = Kriteria::orderBy('id', 'asc')->get();
         return view('admin.hasil.perhitungan', 
-            compact('user', 'page', 'perhitungan', 'aspek', 'kriteria', 'username', 'dt1', 'bobot'));
+            compact('user', 'page', 'perhitungan', 'aspek', 'kriteria', 'username', 'dt1'));
         // $username = Hasil::select('user_id')->distinct()->get();
         // dd($username);
     }
 
     public function test()
     {
-        $perhitungan = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
-        foreach ($perhitungan as $hitung) {
-            $nilai = $hitung->nilai;
-            $nilasistandart = Kriteria::where('id', $hitung->kriteria_id)->sum('nilai');
-            $selisih = ($nilasistandart - $nilai);
-            $bobot = Bobot::where('selisih', $selisih)->get();
-            dd($bobot);
-        }
+        // $nilai = 5;
+        // $nilasistandart = Kriteria::where('id', '1')->sum('nilai');
+        // $selisih = ($nilasistandart - $nilai);
+        // $bobot = Bobot::where('selisih', $selisih)->get();
+        // foreach ($bobot as $b) {
+        //     $ntah = Bobot::find($b->id);
+        //     dd($ntah->id);
+        // }
+        
+        // $hasil = Hasil::groupBy('user_id')
+        //                 ->selectRaw("SUM(nilai) as total_debit")
+        //                 ->selectRaw("SUM(credit) as total_credit")
+        //                 ->groupBy('user_id')
+        //                 ->get();
     }
 }

@@ -47,6 +47,10 @@
                                                 <select class="form-control" name="nilai" id="nilai" required>
                                                 </select>
                                             </div>
+                                            @foreach ($bobot as $bb)
+                                            <input type="hidden" name="bobot_id" value="{{ $bb->id }}" class="form-control" id="bobot_id" required>
+                                            <input type="hidden" name="n_bobot" value="{{ $bb->bobot }}" class="form-control" id="n_bobot" required>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="box-footer ml-4 mt-3 mb-4">
