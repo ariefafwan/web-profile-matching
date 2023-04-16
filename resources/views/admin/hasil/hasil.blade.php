@@ -25,6 +25,8 @@
                                             <th class="text-center">Aspek</th>
                                             <th class="text-center">Sub Kriteria</th>
                                             <th class="text-center">Nilai</th>
+                                            <th class="text-center">Keterangan Selisih</th>
+                                            <th class="text-center">Nilai Bobot</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
@@ -37,6 +39,8 @@
                                             <td align="center">{{ $row->aspek->name }}</td>
                                             <td align="center">{{ $row->kriteria->name }}</td>
                                             <td align="center">{{ $row->nilai }}</td>
+                                            <td align="center">{{ $row->bobot->ket }}</td>
+                                            <td align="center">{{ $row->n_bobot }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     {{-- <a href="" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i></a> --}}

@@ -43,8 +43,8 @@
                     <a href="{{ route('kriteria') }}" class="btn btn-danger btn-flat">
                         Kembali
                     </a>
-                <button type="submit" class="btn btn-primary btn-flat">
-                    Tambah
+                <button type="submit" class="btn btn-success btn-flat">
+                    Edit
                 </button>
             </div>
 
