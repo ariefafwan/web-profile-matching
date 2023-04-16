@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="prodi">Keterangan</label>
-                            <textarea name="ket" id="ket" cols="20" rows="2" class="form-control" required></textarea>
+                            <input type="text" name="ket" class="form-control" id="ket" required>
                         </div>
                     </div>
                 </div>

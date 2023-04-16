@@ -4,19 +4,18 @@
     <section class="content">
         <!-- Begin Page Content -->
         <div class="container">
-            <form action="" method="POST" role="form">
+            <form action="{{ route('updatehasil', $hasil->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="row">
                     <div class="box rounded bg-white">
                         <div class="box-body">
                             <div class="row">
-                                <form action="{{ route('storehasil', $hasil->id) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
                                 <div class="col-md-6 border-left border-right">
                                     <div class="card text-white bg-primary ml-4 mb-3 mt-4" style="width: 28rem;">
                                         <div class="card-body">
                                             <h5 class="card-title">Pilih User</h5>
                                             <select class="form-select" id="floatingSelect" name="user_id" id="user_id" aria-label="Floating label select example" required>
-                                                <option selected>{{ $hasil->user->name }}</option>
+                                                <option selected value="{{ $hasil->user_id }}">{{ $hasil->user->name }}</option>
                                                 @foreach ($grup as $row)
                                                 <option value="{{ $row->id }}">{{ $row->name }}</option>
                                                 @endforeach
@@ -30,7 +29,7 @@
                                             <div class="form-group">
                                                 <label for="aspek_id">Aspek Penilaian</label>
                                                 <select class="form-control" name="aspek_id" id="aspek_id" required>
-													<option selected>{{ $hasil->aspek->name }}</option>
+													<option selected value="{{ $hasil->aspek_id }}">{{ $hasil->aspek->name }}</option>
                                                     @foreach ($aspek as $key => $value)
                                                     <option value="{{ $key }}">{{ $value }}</option>
                                                     @endforeach
@@ -39,7 +38,7 @@
                                             <div class="form-group">
                                                 <label for="prodi">Nama Kriteria</label>
                                                 <select class="form-control" name="kriteria_id" id="subkriteria" required>
-													<option selected>{{ $hasil->kriteria->name }}</option>
+													<option selected value="{{ $hasil->kriteria_id }}" >{{ $hasil->kriteria->name }}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -47,22 +46,17 @@
                                                 <select class="form-control" name="nilai" id="nilai" required>
                                                 </select>
                                             </div>
-                                            @foreach ($bobot as $bb)
-                                            <input type="hidden" name="bobot_id" value="{{ $bb->id }}" class="form-control" id="bobot_id" required>
-                                            <input type="hidden" name="n_bobot" value="{{ $bb->bobot }}" class="form-control" id="n_bobot" required>
-                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="box-footer ml-4 mt-3 mb-4">
                                         <a href="{{ route('hasil') }}" class="btn btn-danger btn-flat">
                                             Kembali
                                         </a>
-                                        <button type="submit" class="btn btn-primary btn-flat">
-                                            Tambah
+                                        <button type="submit" class="btn btn-success btn-flat">
+                                            Edit
                                         </button>
                                     </div>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
