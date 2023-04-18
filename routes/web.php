@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('admin/editaspek/{id}', [AdminController::class, 'editaspek'])->name('editaspek');
             Route::post('admin/editaspek/{id}/update', [AdminController::class, 'updateaspek'])->name('updateaspek');
             Route::post('admin/editaspek/{id}/destroy', [AdminController::class, 'destroyaspek'])->name('destroyaspek');
-            //Krietria
+            //Kriteria
             Route::get('admin/kriteria', [AdminController::class, 'kriteria'])->name('kriteria');
             Route::get('admin/createkriteria', [AdminController::class, 'createkriteria'])->name('createkriteria');
             Route::post('admin/createkriteria', [AdminController::class, 'storekriteria'])->name('storekriteria');
@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('getkriteria/{id}', [AdminController::class, 'getkriteria']);
             //Bobot
             Route::get('admin/bobot', [AdminController::class, 'bobot'])->name('bobot');
-            //Hasil
+            //Cacah Hasil
             Route::get('getpertanyaan/{id}', [AdminController::class, 'getpertanyaan']);
             Route::get('admin/hasil/create', [AdminController::class, 'hasil'])->name('tambahhasil');
             Route::post('admin/hasil/create', [AdminController::class, 'storehasil'])->name('storehasil');
@@ -58,8 +58,13 @@ Route::middleware(['auth'])->group(function () {
             Route::get('admin/hasil/edit/{id}', [AdminController::class, 'edithasil'])->name('edithasil');
             Route::post('admin/hasil/edit/{id}/update', [AdminController::class, 'updatehasil'])->name('updatehasil');
             Route::post('admin/hasil/edit/{id}/destroy', [AdminController::class, 'destroyhasil'])->name('destroyhasil');
+            //Tabel Cacah
+            Route::get('admin/hasil/table', [AdminController::class, 'tabelcacah'])->name('tabelcacah');
             //Perhitungan
             Route::get('admin/perhitungan', [AdminController::class, 'perhitungan'])->name('perhitungan');
+            //NT & Rangking
+            Route::post('admin/perhitungan', [AdminController::class, 'storetotal'])->name('storetotal');
+            Route::get('admin/nt-rangking', [AdminController::class, 'ranking'])->name('ranking');
 
             Route::get('admin/test', [AdminController::class, 'test'])->name('test');
         });

@@ -25,20 +25,48 @@ class KriteriaSeeder extends Seeder
         Kriteria::Create([
             'aspek_id' => '1',
             'name' => 'Kerja Sama',
+            'jenis' => 'cf',
+            'nilai' => '4',
+        ]);
+
+        Kriteria::Create([
+            'aspek_id' => '1',
+            'name' => 'Kerapian',
             'jenis' => 'sf',
             'nilai' => '4',
         ]);
 
         Kriteria::Create([
+            'aspek_id' => '1',
+            'name' => 'Kepribadian',
+            'jenis' => 'sf',
+            'nilai' => '3',
+        ]);
+
+        Kriteria::Create([
             'aspek_id' => '2',
-            'name' => 'Rapi',
+            'name' => 'Disiplin',
             'jenis' => 'cf',
             'nilai' => '4',
         ]);
 
         Kriteria::Create([
             'aspek_id' => '2',
-            'name' => 'Tertata',
+            'name' => 'Rajin',
+            'jenis' => 'cf',
+            'nilai' => '4',
+        ]);
+
+        Kriteria::Create([
+            'aspek_id' => '2',
+            'name' => 'Penataan',
+            'jenis' => 'sf',
+            'nilai' => '3',
+        ]);
+
+        Kriteria::Create([
+            'aspek_id' => '2',
+            'name' => 'Ulet',
             'jenis' => 'sf',
             'nilai' => '3',
         ]);

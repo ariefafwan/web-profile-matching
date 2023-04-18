@@ -22,7 +22,7 @@ class PertanyaanController extends Controller
     {
         $user = Auth::user()->id;
         $page = "Daftar Bobot Pertanyaan";
-        $pertanyaan = Pertanyaan::latest()->paginate(10);
+        $pertanyaan = Pertanyaan::orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->orderBy('nilai', 'desc')->paginate(10);
         return view('admin.pertanyaan.pertanyaan', compact('user', 'page', 'pertanyaan'));
     }
 

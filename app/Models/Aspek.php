@@ -24,4 +24,9 @@ class Aspek extends Model
     {
         return $this->hasMany(Pertanyaan::class);
     }
+
+    public function ranking()
+    {
+        return $this->hasMany(Ranking::class);
+    }
 }

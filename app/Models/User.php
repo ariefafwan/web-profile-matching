@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Hasil::class);
     }
 
+    public function ranking()
+    {
+        return $this->hasMany(Ranking::class);
+    }
+
     public function adminlte_image()
     {
         $profile = Auth::user()->profile_img;
