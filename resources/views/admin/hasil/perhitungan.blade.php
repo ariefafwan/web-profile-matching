@@ -9,93 +9,95 @@
 
             <!-- Content -->
                 <div class="container">
-                    <div class="box-footer mb-3">
-                        <a href="{{ route('tambahhasil') }}" class="btn btn-primary">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>  CREATE NEW</a>
+                    <div class="box mb-3">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Hitung Nilai Total & Perankingan</button>
                     </div>
+                    @foreach ($aspek as $i =>$value)
                     <div class="col-xs-12">
+                        <div class="card-header py-3">
+                            <h5 class="m-0 font-weight-bold text-primary">Tabel Nilai Total Aspek {{ $value->name }}</h5>
+                        </div>
                         <div class="box">
                             <div class="box-body">
-                                <table class="table table-bordered table-hover" style="font-size: 11px;">
+                                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th rowspan="3" style='text-align:center;'>Nama Alternatif</th>
-                                        </tr>
-                                        <tr>
-                                            @foreach ($aspek as $aspek)
-                                            {{-- <th style='text-align:center;' colspan='3'>Intelektual</th>
-                                            <th style='text-align:center;' colspan='3'>Sikap</th>
-                                            <th style='text-align:center;' colspan='4'>Perilaku</th>
-                                            <th style='text-align:center;' colspan='1'>Cakap</th> --}}
-                                            <th style='text-align:center;' colspan='3'>{{ $aspek->name }}</th>
-                                            @endforeach
-                                        </tr>
-                                        <tr>
-                                            @foreach ($kriteria as $kriteria)
-                                            <th style='text-align:center;'>{{ $kriteria->name }}</th>
-                                            @endforeach
-                                            {{-- <th style='text-align:center;'>Orientasi Pelayanan</th>
-                                            <th style='text-align:center;'>Kerjasama</th>
-                                            <th style='text-align:center;'>Kerajinan</th>
-                                            <th style='text-align:center;'>Target penjualan offline</th>
-                                            <th style='text-align:center;'>Target penjualan COD</th>
-                                            <th style='text-align:center;'>Target penjualan kirim paket</th>
-                                            <th style='text-align:center;'>Penampilan</th>
-                                            <th style='text-align:center;'>Kedisiplinan</th>
-                                            <th style='text-align:center;'>Kehadiran</th>
-                                            <th style='text-align:center;'>Kehangatan</th>
-                                            <th style='text-align:center;'>Bahasa Inggris</th> --}}
+                                            <th class="text-center">Username</th>
+                                            <th class="text-center">NCF</th>
+                                            <th class="text-center">NSF</th>
                                         </tr>
                                     </thead>
+            
                                     <tbody>
-                                        <tr>
-                                            @foreach ($username as $user)
-                                            <td>{{ $user->user->name }}</td>
-                                            @endforeach
-                                            @foreach ($perhitungan as $hasil)
-                                            {{-- <td>{{ $hasil->nilai }}</td> --}}
-                                            <td>{{ $hasil->BobotName }}</td>
+                                    @foreach ($username as $name => $names)
+                                        <tr
+                                        <tr align="center">
+                                            <td align="center">{{ $names->user->name }}</td>
+                                            @foreach($hasil as $index => $row)
+                                            @if($row->aspek_id == $i+1)
+                                            @if($row->user_id == $names->user_id)
+                                            <td align="center">{{ $row->nilai }}</td>
+                                            @endif
+                                            @endif
                                             @endforeach
                                         </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <table id="category-table" class="table table-light table-striped table-bordered table-hover">
-                                    
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Username</th>
-                                        <th class="text-center">Aspek</th>
-                                        <th class="text-center">Sub Kriteria</th>
-                                        <th class="text-center">Nilai</th>
-                                        <th class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-        
-                                <tbody>
-                                    @foreach($hasilcf as $index => $row)
-                                    <tr align="center">
-                                        <th>{{ $loop->iteration }}</th>                                        
-                                        <td align="center">{{ $row->total_nilai }}</td>
-                                        <td align="center">{{ $row->total_bobot }}</td>
-                                        <td>
-                                            
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    @endforeach
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- konten modal-->
+                            <div class="modal-content">
+                                <!-- heading modal -->
+                                <div class="modal-header">
+                                    <h5> Hitung Nilai Total </h5>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- body modal -->
+                                <div class="modal-body">
+                                    <form action="{{ route('storetotal') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="user_id">User</label>
+                                            <select class="form-control" name="user_id" id="user_id" required>
+                                                @foreach ($userid as $iduser)
+                                                <option value="{{ $iduser->id }}">{{ $iduser->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="aspek_id">Aspek Penilaian</label>
+                                            <select class="form-control" name="aspek_id" id="aspek_id" required>
+                                                @foreach ($aspek as $aspekid)
+                                                <option value="{{ $aspekid->id }}">{{ $aspekid->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prodi">NCF</label>
+                                            <input type="number" step=any name="ncf" class="form-control" id="ncf" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prodi">NSF</label>
+                                            <input type="number" step=any name="nsf" class="form-control" id="nsf" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- footer modal -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
+                                    <button type="submit" class="btn btn-primary btn-flat">Tambah</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
         
         <!-- End Content Row -->
         </div>

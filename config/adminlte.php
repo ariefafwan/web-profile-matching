@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => 'Profile Matching',
-    'logo_img' => 'vendor/adminlte/dist/img/suntuk.jpeg',
+    'logo_img' => 'vendor/adminlte/dist/img/tut.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -372,18 +372,31 @@ return [
             'can'         => 'admin',
         ],
         [
-            'text'        => 'Hasil Evaluasi',
-            'route'       => 'hasil',
-            'icon'        => 'fas fa-fw fa-chart-bar',
-            'label_color' => 'success',
-            'can'         => 'admin',
-        ],
-        [
-            'text'        => 'Perhitungan',
-            'route'       => 'perhitungan',
-            'icon'        => 'fas fa-fw fa-chart-bar',
-            'label_color' => 'success',
-            'can'         => 'admin',
+            'text'    => 'Hasil Evaluasi',
+            'icon'    => 'fas fa-fw fa fa-bars',
+            'can'  =>  'admin',
+            'submenu' => [
+                [
+                    'text'        => 'Cacah Evaluasi',
+                    'route'       => 'hasil',
+                    'icon'        => 'fas fa-fw fa-braille',
+                ],
+                [
+                    'text' => 'Table Cacah',
+                    'icon' => 'fas fa-fw fa-table',
+                    'route'  => 'tabelcacah',
+                ],
+                [
+                    'text'        => 'Perhitungan NF',
+                    'route'       => 'perhitungan',
+                    'icon'        => 'fas fa-fw fa-chart-bar',
+                ],
+                [
+                    'text' => 'Nilai Total & Ranking',
+                    'icon' => 'fas fa-fw fa-cubes',
+                    'route'  => 'ranking',
+                ],
+            ],
         ],
         [
             'text'        => 'Hasil Evaluasi Anda',

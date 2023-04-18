@@ -6,14 +6,16 @@ use App\Models\Aspek;
 use App\Models\Bobot;
 use App\Models\Hasil;
 use App\Models\Kriteria;
-use App\Models\Pegawai;
+use Illuminate\Support\Facades\DB;
 use App\Models\Pertanyaan;
+use App\Models\Ranking;
 use App\Models\User;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
+use PHPUnit\Framework\Constraint\Count;
 
 class AdminController extends Controller
 {
@@ -99,7 +101,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $page = "Sub Kriteria Penilaian";
-        $kriteria = Kriteria::latest()->paginate(10);
+        $kriteria = Kriteria::orderBy('aspek_id','asc')->orderBy('jenis', 'asc')->paginate(10);
         return view('admin.kriteria.kriteria', compact('user', 'page', 'kriteria'));
     }
 
@@ -227,10 +229,11 @@ class AdminController extends Controller
         return redirect()->route('tambahhasil');
     }
 
+    //Cacah Evaluasi
     public function evaluasihasil()
     {
         $user = Auth::user()->id;
-        $page = "Hasil Evaluasi User";
+        $page = "Cacah Evaluasi User";
         $hasil = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->paginate(10);
         return view('admin.hasil.hasil', compact('user', 'page', 'hasil'));
     }
@@ -288,67 +291,140 @@ class AdminController extends Controller
         return back();
     }
 
-    //Hasil Perhitungan
-    public function perhitungan()
+    //Tabel Cacah Evaluasi
+    public function tabelcacah()
     {
         $user = Auth::user()->id;
+        $page = "Tabel Cacah Evaluasi";
         $username = Hasil::select('user_id')->distinct()->get();
-        $perhitungan = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
-        $page = "Perhitungan";
+        $hasil = Hasil::orderBy('user_id', 'asc')->orderBy('aspek_id', 'asc')->orderBy('kriteria_id', 'asc')->get();
         $aspek = Aspek::orderBy('id', 'asc')->get();
-        $dt1 = Aspek::get()->count();
         $kriteria = Kriteria::orderBy('id', 'asc')->get();
+        // $colspan = $aspek->kriteria()->count();
+        return view('admin.hasil.tabel', compact('user', 'page', 'hasil', 'aspek', 'username', 'kriteria'));
+    }
 
-        $hasilcf = Hasil::where('jenis', 'cf')
-                        ->selectRaw("SUM(nilai) as total_nilai")
-                        ->selectRaw("SUM(n_bobot) as total_bobot")
-                        ->groupBy('user_id')
-                        ->groupBy('aspek_id')
-                        ->get();
+    //Hasil Perhitungan
+    public function perhitungan()
+    {   
+        //view
+        $user = Auth::user()->id;
+        $page = "Perhitungan Nilai Factor Setiap Aspek";
+        $username = Hasil::select('user_id')->distinct()->get();
+        $aspek = Aspek::all();
+        $hasil = Hasil::select('user_id', 'aspek_id', 'jenis')
+            ->selectRaw("SUM(n_bobot) / count(n_bobot) as nilai")
+            ->groupBy('user_id')
+            ->groupBy('aspek_id')
+            ->groupBy('jenis')
+            ->orderBy('user_id', 'asc')
+            ->orderBy('aspek_id', 'asc')
+            ->get();
+
+        
+        //modal
+        $userid = User::all()->where('role_id', '2');
                         
         return view('admin.hasil.perhitungan', 
-            compact('user', 'page', 'perhitungan', 'aspek', 'kriteria', 'username', 'dt1', 'hasilcf'));
-        // $username = Hasil::select('user_id')->distinct()->get();
-        // dd($username);
+            compact('user', 'page', 'hasil', 'aspek', 'username', 'userid'));
+    }
+
+    //store nilai total
+    public function storetotal(Request $request)
+    {
+        $aspekid = Aspek::where('id', $request->aspek_id)->get();
+        foreach ($aspekid as $as) {
+            $bobot = $as->bobot;
+            $cf = $as->cf;
+            $sf = $as->sf;
+            $nilaicf = $request->ncf;
+            $nilaisf = $request->nsf;
+            $total = (($cf / 100) * $nilaicf) + (($sf / 100) * $nilaisf);
+        }
+        
+        $dtUpload = new Ranking();
+        $dtUpload->user_id = $request->user_id;
+        $dtUpload->aspek_id = $request->aspek_id;
+        $dtUpload->nt = $total;
+        $dtUpload->b_aspek = $bobot;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Hasil Baru Berhasil Ditambahkan');
+        return redirect()->route('perhitungan');
+    }
+
+    public function ranking()
+    {   
+        $user = Auth::user()->id;
+        $page = "Nilai Total & Rangking";
+        //Ranking
+        $username = Ranking::select('user_id')->distinct()->get();
+        $ranking = Ranking::select('user_id')
+            ->selectRaw("SUM(nt * b_aspek / 100) as hr")
+            ->groupBy('user_id')
+            ->orderBy('hr', 'desc')
+            ->get();
+
+        //NT
+        $counta = Aspek::all()->count();
+        $aspek = Aspek::all();
+        $nt = Ranking::orderBy('user_id', 'asc')->get();
+                        
+        return view('admin.hasil.ranking',
+            compact('user', 'page', 'ranking', 'username', 'nt', 'aspek', 'counta'));
     }
 
     public function test()
     {
-        // $nilai = 5;
-        // $nilasistandart = Kriteria::where('id', '1')->sum('nilai');
-        // $selisih = ($nilasistandart - $nilai);
-        // $bobot = Bobot::where('selisih', $selisih)->get();
-        // foreach ($bobot as $b) {
-        //     $ntah = Bobot::find($b->id);
-        //     dd($ntah->id);
-        // }
         // $ncf = Hasil::where('jenis', 'cf')
-        //                 ->select('user_id')
-        //                 ->select('aspek_id')
+        //                 ->select('user_id', 'aspek_id')
         //                 ->selectRaw("SUM(n_bobot) / count(n_bobot) as ncf")
-        //                 ->groupBy('aspek_id')
         //                 ->groupBy('user_id')
+        //                 ->groupBy('aspek_id')
+        //                 ->orderBy('user_id', 'asc')
+        //                 ->orderBy('aspek_id', 'asc')
         //                 ->get();
 
         // $nsf = Hasil::where('jenis', 'sf')
+        //                 ->select('user_id', 'aspek_id')
         //                 ->selectRaw("SUM(n_bobot) / count(n_bobot) as nsf")
         //                 ->groupBy('user_id')
         //                 ->groupBy('aspek_id')
+        //                 ->orderBy('user_id', 'asc')
+        //                 ->orderBy('aspek_id', 'asc')
         //                 ->get();
-        // dd($ncf);
+        // $n = Hasil::select('user_id', 'aspek_id', 'jenis')
+        //                 ->selectRaw("SUM(n_bobot) / count(n_bobot) as nilai")
+        //                 ->groupBy('user_id')
+        //                 ->groupBy('aspek_id')
+        //                 ->groupBy('jenis')
+        //                 ->orderBy('user_id', 'asc')
+        //                 ->orderBy('aspek_id', 'asc')
+        //                 ->get()
+        //                 ->toArray();
 
-        $jenis = Kriteria::where('id', '1')->get();
-        $nilaistandart = Kriteria::where('id', '1')->sum('nilai');
-        foreach ($jenis as $jj) {
-            $k = $jj->jenis;
-            $nilai = 3;
-            $selisih = ($nilai - $nilaistandart);
-        }
-        $bobot = Bobot::where('selisih', $selisih)->get();
-        foreach ($bobot as $bb) {
-            $idbobot = $bb->id;
-            $n_bobot = $bb->bobot;
-        }
-        dd($n_bobot);
+        // $nilaisf = $n->where('jenis', 'sf');
+        // $nilaicf = $n->where('jenis', 'cf');
+
+        // foreach ($n as $o) {
+            
+        // }
+        
+        // foreach ($nilaisf as $n_sf) {
+        //     $sfaspek = $n_sf->aspek->sf;
+        // }
+
+        // foreach ($nilaicf as $n_cf) {
+        //     $cfaspek = $n_cf->aspek->cf;
+        // }
+
+        // $ns = (($n_sf->aspek->sf / 100) * $n_sf->nilai) + (($n_cf->aspek->cf / 100) * $n_cf->nilai);
+        $ranking = Ranking::select('user_id')
+            ->selectRaw("SUM(nt * b_aspek / 100) as hr")
+            ->groupBy('user_id')
+            ->orderBy('hr', 'desc')
+            ->get();
+
+        dd($ranking);
     }
 }

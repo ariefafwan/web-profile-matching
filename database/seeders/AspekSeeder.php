@@ -19,12 +19,14 @@ class AspekSeeder extends Seeder
             'name' => 'Sikap',
             'cf' => '60',
             'sf' => '40',
+            'bobot' => '60',
         ]);
         
         Aspek::Create([
-            'name' => 'Kerapian',
+            'name' => 'Kinerja',
             'cf' => '55',
             'sf' => '45',
+            'bobot' => '40',
         ]);
     }
 }
