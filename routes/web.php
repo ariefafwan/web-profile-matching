@@ -66,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('admin/perhitungan', [AdminController::class, 'storetotal'])->name('storetotal');
             Route::get('admin/nt-rangking', [AdminController::class, 'ranking'])->name('ranking');
 
+            Route::get('admin/pegawai', [AdminController::class, 'pegawai'])->name('pegawai');
+            Route::post('admin/pegawai/{id}', [AdminController::class, 'destroypegawai'])->name('destroypegawai');
             Route::get('admin/test', [AdminController::class, 'test'])->name('test');
         });
 

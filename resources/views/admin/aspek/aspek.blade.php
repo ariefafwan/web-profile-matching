@@ -24,6 +24,7 @@
                                             <th class="text-center">Nama</th>
                                             <th class="text-center">CF (%)</th>
                                             <th class="text-center">SF (%)</th>
+                                            <th class="text-center">Bobot Aspek (%)</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
@@ -35,6 +36,7 @@
                                             <td align="center">{{ $row->name }}</td>
                                             <td align="center">{{ $row->cf }}%</td>
                                             <td align="center">{{ $row->sf }}%</td>
+                                            <td align="center">{{ $row->bobot }}%</td>
                                             <td>
                                                 <div class="btn-group">
                                                     {{-- <a href="" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i></a> --}}
