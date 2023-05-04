@@ -440,12 +440,12 @@ class AdminController extends Controller
         // }
 
         // $ns = (($n_sf->aspek->sf / 100) * $n_sf->nilai) + (($n_cf->aspek->cf / 100) * $n_cf->nilai);
-        $ranking = Ranking::select('user_id')
-            ->selectRaw("SUM(nt * b_aspek / 100) as hr")
-            ->groupBy('user_id')
-            ->orderBy('hr', 'desc')
-            ->get();
+        // $ranking = Ranking::select('user_id')
+        //     ->selectRaw("SUM(nt * b_aspek / 100) as hr")
+        //     ->groupBy('user_id')
+        //     ->orderBy('hr', 'desc')
+        //     ->get();
 
-        dd($ranking);
+        // dd($ranking);
     }
 }
