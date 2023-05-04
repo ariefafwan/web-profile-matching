@@ -24,7 +24,26 @@ class AdminController extends Controller
         $user = Auth::user();
         $page = "Dasboard Admin";
         $dt1 = User::where('role_id', '2')->get()->count();
-        return view('admin.dashboard', compact('user', 'page', 'dt1'));
+        $dt2 = Ranking::select('user_id')->distinct()->get()->count();
+        return view('admin.dashboard', compact('user', 'page', 'dt1', 'dt2'));
+    }
+
+    //daftar user/pegawai
+    public function pegawai()
+    {
+        $user = Auth::user();
+        $page = "Daftar Pegawai";
+        $grup = User::where('role_id', '2')->paginate(10);
+        return view('admin.pegawai', compact('user', 'page', 'grup'));
+    }
+
+    public function destroypegawai($id)
+    {
+        $pegawai = User::findOrFail($id);
+        $pegawai->delete();
+        
+        Alert::success('Informasi Pesan!', 'Pegawai Berhasil dihapus!');
+        return back();
     }
 
     //Aspek
@@ -50,6 +69,7 @@ class AdminController extends Controller
         $dtUpload->name = $request->name;
         $dtUpload->cf = $request->cf;
         $dtUpload->sf = $request->sf;
+        $dtUpload->bobot = $request->bobot;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Aspek Baru Berhasil ditambahkan');
@@ -70,6 +90,7 @@ class AdminController extends Controller
         $dtUpload->name = $request->name;
         $dtUpload->cf = $request->cf;
         $dtUpload->sf = $request->sf;
+        $dtUpload->bobot = $request->bobot;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Aspek Berhasil Diedit');

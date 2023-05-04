@@ -303,12 +303,12 @@ return [
 
         // Sidebar items:
         ['header' => 'Dashboard'],
-        [
-            'text' => 'Profile',
-            'route'  => 'home',
-            'icon' => 'fas fa-fw fa fa-cog',
-            'can'   => 'admin',
-        ],
+        // [
+        //     'text' => 'Profile',
+        //     'route'  => 'home',
+        //     'icon' => 'fas fa-fw fa fa-cog',
+        //     'can'   => 'admin',
+        // ],
         [
             'text'        => 'Dashboard',
             'route'       => 'admin',
@@ -326,7 +326,7 @@ return [
         ['header' => 'Pegawai'],
         [
             'text' => 'Daftar Pegawai',
-            'route'  => 'home',
+            'route'  => 'pegawai',
             'icon' => 'fas fa-fw fa-user',
             'can'   => 'admin',
         ],

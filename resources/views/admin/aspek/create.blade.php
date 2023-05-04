@@ -14,16 +14,20 @@
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="prodi">Nama Aspek Penilaian</label>
+                            <label for="name">Nama Aspek Penilaian</label>
                             <input type="text" name="name" class="form-control" id="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="prodi">Nilai CF (%)</label>
+                            <label for="cf">Nilai CF (%)</label>
                             <input type="number" name="cf" class="form-control" id="cf" required>
                         </div>
                         <div class="form-group">
-                            <label for="prodi">Nilai SF (%)</label>
+                            <label for="sf">Nilai SF (%)</label>
                             <input type="number" name="sf" class="form-control" id="sf" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bobot">Bobot Aspek (%)</label>
+                            <input type="number" name="bobot" class="form-control" id="bobot" required>
                         </div>
                     </div>
                 </div>
