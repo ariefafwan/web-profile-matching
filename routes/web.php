@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('admin/pegawai', [AdminController::class, 'pegawai'])->name('pegawai');
             Route::post('admin/pegawai/{id}', [AdminController::class, 'destroypegawai'])->name('destroypegawai');
-            Route::get('admin/test', [AdminController::class, 'test'])->name('test');
+            // Route::get('admin/test', [AdminController::class, 'test'])->name('test');
         });
 
         //Middleware User
