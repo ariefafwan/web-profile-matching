@@ -13,7 +13,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="aspek_id">Aspek Penilaian</label>
-                            <select class="form-select" id="floatingSelect" name="aspek_id" id="aspek_id" aria-label="Floating label select example" required>
+                            <select class="form-control" id="floatingSelect" name="aspek_id" id="aspek_id" aria-label="Floating label select example" required>
                                 <option selected>--Piih Aspek Penilaian--</option>
                                 @foreach ($aspek as $key => $value)
 	                                <option value="{{ $key }}">{{ $value }}</option>

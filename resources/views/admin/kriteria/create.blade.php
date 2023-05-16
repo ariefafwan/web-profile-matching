@@ -15,7 +15,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="prodi">Aspek Penilaian</label>
-                            <select class="form-select" id="floatingSelect" name="aspek_id" id="aspek_id" aria-label="Floating label select example" required>
+                            <select class="form-control" id="floatingSelect" name="aspek_id" id="aspek_id" aria-label="Floating label select example" required>
                                 <option selected>--Piih Aspek Penilaian--</option>
                                 @foreach ($aspek as $aspek)
                                 <option value="{{ $aspek->id }}">{{ $aspek->name }}</option>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="prodi">Jenis</label>
-                            <select class="form-select" id="floatingSelect" name="jenis" id="jenis" aria-label="Floating label select example" required>
+                            <select class="form-control" id="floatingSelect" name="jenis" id="jenis" aria-label="Floating label select example" required>
                                 <option selected>--Piih Jenis--</option>
                                 <option value="cf">Core Factor</option>
                                 <option value="sf">Secondary Factor</option>

@@ -33,7 +33,7 @@
                                         <tr align="center">
                                             <th>{{ $loop->iteration }}</th>
                                             <td align="center">{{ $row->aspek->name }}</td>
-                                            <td align="center">{{ $row->name }}</td>
+                                            <td align="left" style="width: 40%">{{ $row->name }}</td>
                                             <td align="center">{{ $row->JenisName }}</td>
                                             <td align="center">{{ $row->nilai }}</td>
                                             <td>
