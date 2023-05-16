@@ -14,7 +14,7 @@
                                     <div class="card text-white bg-primary ml-4 mb-3 mt-4" style="width: 28rem;">
                                         <div class="card-body">
                                             <h5 class="card-title">Pilih User</h5>
-                                            <select class="form-select" id="floatingSelect" name="user_id" id="user_id" aria-label="Floating label select example" required>
+                                            <select class="form-control" id="floatingSelect" name="user_id" id="user_id" aria-label="Floating label select example" required>
                                                 <option selected value="{{ $hasil->user_id }}">{{ $hasil->user->name }}</option>
                                                 @foreach ($grup as $row)
                                                 <option value="{{ $row->id }}">{{ $row->name }}</option>

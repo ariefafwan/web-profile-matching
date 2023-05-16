@@ -5,7 +5,6 @@
         <!-- Begin Page Content -->
     <div class="container-fluid">
 
-
             <!-- Content -->
             <form action="{{ route('updateaspek', $aspek->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -27,7 +26,7 @@
                         </div>
                         <div class="form-group">
                             <label for="bobot">Bobot Aspek (%)</label>
-                            <input type="number" name="bobot" class="form-control" id="bobot" required>
+                            <input type="number" name="bobot" class="form-control" value="{{ $aspek->bobot }}" id="bobot" required>
                         </div>
                     </div>
                 </div>
