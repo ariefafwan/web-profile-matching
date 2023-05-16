@@ -25,6 +25,10 @@
                             <label for="prodi">Nilai SF (%)</label>
                             <input type="number" name="sf" class="form-control" value="{{ $aspek->sf }}" id="sf" required>
                         </div>
+                        <div class="form-group">
+                            <label for="bobot">Bobot Aspek (%)</label>
+                            <input type="number" name="bobot" class="form-control" id="bobot" required>
+                        </div>
                     </div>
                 </div>
                 <div class="box-footer">
