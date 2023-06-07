@@ -16,7 +16,7 @@
                     </div>
                     <div class="box">
                         <div class="box-body">
-                            <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                            <table id="category-table" class="table table-primary table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center" rowspan="3">Username</th>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="box">
                         <div class="box-body">
-                            <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                            <table id="category-table" class="table table-primary table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
