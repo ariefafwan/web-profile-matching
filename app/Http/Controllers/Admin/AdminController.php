@@ -2,6 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AspekExport;
+use App\Exports\HasilExport;
+use App\Exports\KriteriaExport;
+use App\Exports\PertanyaanExport;
+use App\Exports\RankingExport;
+use App\Exports\UsersExport;
+use App\Imports\AspekImport;
+use App\Imports\HasilImport;
+use App\Imports\KriteriaImport;
+use App\Imports\PertanyaanImport;
+use App\Imports\RankingImport;
+use App\Imports\UsersImport;
 use App\Models\Aspek;
 use App\Models\Bobot;
 use App\Models\Hasil;
@@ -15,7 +27,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
-use PHPUnit\Framework\Constraint\Count;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -41,7 +53,7 @@ class AdminController extends Controller
     {
         $pegawai = User::findOrFail($id);
         $pegawai->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Pegawai Berhasil dihapus!');
         return back();
     }
@@ -101,7 +113,7 @@ class AdminController extends Controller
     {
         $aspek = Aspek::findOrFail($id);
         $aspek->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Aspek Berhasil dihapus!');
         return back();
     }
@@ -116,13 +128,13 @@ class AdminController extends Controller
         return view('admin.pegawai.pegawai', compact('user', 'pegawai', 'page'));
     }
 
-    
+
     //Kriteria
     public function kriteria()
     {
         $user = Auth::user();
         $page = "Sub Kriteria Penilaian";
-        $kriteria = Kriteria::orderBy('aspek_id','asc')->orderBy('jenis', 'asc')->paginate(10);
+        $kriteria = Kriteria::orderBy('aspek_id', 'asc')->orderBy('jenis', 'asc')->paginate(10);
         return view('admin.kriteria.kriteria', compact('user', 'page', 'kriteria'));
     }
 
@@ -175,7 +187,7 @@ class AdminController extends Controller
     {
         $kriteria = Kriteria::findOrFail($id);
         $kriteria->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Kriteria Berhasil dihapus!');
         return back();
     }
@@ -192,7 +204,7 @@ class AdminController extends Controller
     //Get Kriteria
     public function getkriteria($id)
     {
-        $kriteria = Kriteria::where("aspek_id",$id)->pluck('name','id');
+        $kriteria = Kriteria::where("aspek_id", $id)->pluck('name', 'id');
         return json_encode($kriteria);
         // dd($kriteria);
     }
@@ -200,7 +212,7 @@ class AdminController extends Controller
     //Get Pertanyaan
     public function getpertanyaan($id)
     {
-        $pertanyaan = Pertanyaan::where("kriteria_id",$id)->pluck('ket', 'nilai', 'id');
+        $pertanyaan = Pertanyaan::where("kriteria_id", $id)->pluck('ket', 'nilai', 'id');
         return json_encode($pertanyaan);
         // dd($pertanyaan);
     }
@@ -212,12 +224,14 @@ class AdminController extends Controller
         $hasil = Hasil::latest()->paginate(10);
         $grup = User::all()->where('role_id', '2');
         $page = "Tambah Evaluasi Penilaian";
-        $aspek = Aspek::pluck('name','id');
+        $aspek = Aspek::pluck('name', 'id');
         $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
         $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
 
-        return view('admin.hasil.create',
-            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+        return view(
+            'admin.hasil.create',
+            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek')
+        );
     }
 
     public function storehasil(Request $request)
@@ -235,7 +249,7 @@ class AdminController extends Controller
             $idbobot = $bb->id;
             $n_bobot = $bb->bobot;
         }
-        
+
         $dtUpload = new Hasil();
         $dtUpload->user_id = $request->user_id;
         $dtUpload->aspek_id = $request->aspek_id;
@@ -265,12 +279,14 @@ class AdminController extends Controller
         $page = "Edit Evaluasi User";
         $hasil = Hasil::findOrFail($id);
         $grup = User::all()->where('role_id', '2');
-        $aspek = Aspek::pluck('name','id');
+        $aspek = Aspek::pluck('name', 'id');
         $kriteria = Kriteria::all()->where('aspek_id', $request->aspek_id);
         $pertanyaan = Pertanyaan::all()->where('kriteria_id', $request->kriteria_id);
-        
-        return view('admin.hasil.edit', 
-            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek'));
+
+        return view(
+            'admin.hasil.edit',
+            compact('user', 'page', 'grup', 'hasil', 'kriteria', 'pertanyaan', 'aspek')
+        );
     }
 
     public function updatehasil(Request $request, $id)
@@ -288,7 +304,7 @@ class AdminController extends Controller
             $idbobot = $bb->id;
             $n_bobot = $bb->bobot;
         }
-        
+
         $dtUpload = Hasil::findOrFail($id);
         $dtUpload->user_id = $request->user_id;
         $dtUpload->aspek_id = $request->aspek_id;
@@ -307,7 +323,7 @@ class AdminController extends Controller
     {
         $hasil = Hasil::findOrFail($id);
         $hasil->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Hasil Berhasil dihapus!');
         return back();
     }
@@ -327,7 +343,7 @@ class AdminController extends Controller
 
     //Hasil Perhitungan
     public function perhitungan()
-    {   
+    {
         //view
         $user = Auth::user()->id;
         $page = "Perhitungan Nilai Factor Setiap Aspek";
@@ -342,12 +358,14 @@ class AdminController extends Controller
             ->orderBy('aspek_id', 'asc')
             ->get();
 
-        
+
         //modal
         $userid = User::all()->where('role_id', '2');
-                        
-        return view('admin.hasil.perhitungan', 
-            compact('user', 'page', 'hasil', 'aspek', 'username', 'userid'));
+
+        return view(
+            'admin.hasil.perhitungan',
+            compact('user', 'page', 'hasil', 'aspek', 'username', 'userid')
+        );
     }
 
     //store nilai total
@@ -362,7 +380,7 @@ class AdminController extends Controller
             $nilaisf = $request->nsf;
             $total = (($cf / 100) * $nilaicf) + (($sf / 100) * $nilaisf);
         }
-        
+
         $dtUpload = new Ranking();
         $dtUpload->user_id = $request->user_id;
         $dtUpload->aspek_id = $request->aspek_id;
@@ -375,7 +393,7 @@ class AdminController extends Controller
     }
 
     public function ranking()
-    {   
+    {
         $user = Auth::user()->id;
         $page = "Nilai Total & Rangking";
         //Ranking
@@ -390,9 +408,118 @@ class AdminController extends Controller
         $counta = Aspek::all()->count();
         $aspek = Aspek::all();
         $nt = Ranking::orderBy('user_id', 'asc')->get();
-                        
-        return view('admin.hasil.ranking',
-            compact('user', 'page', 'ranking', 'username', 'nt', 'aspek', 'counta'));
+
+        return view(
+            'admin.hasil.ranking',
+            compact('user', 'page', 'ranking', 'username', 'nt', 'aspek', 'counta')
+        );
+    }
+    public function importaspek(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new AspekImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Aspek Berhasil diimport');
+        return redirect()->route('seluruhaspek');
+    }
+
+    public function importkriteria(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new KriteriaImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Sub Kriteria Berhasil diimport');
+        return redirect()->route('kriteria');
+    }
+
+    public function importranking(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new RankingImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Ranking Berhasil diimport');
+        return redirect()->route('ranking');
+    }
+
+    public function importpertanyaan(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new PertanyaanImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Bobot Pertanyaan Berhasil diimport');
+        return redirect()->route('pertanyaan.index');
+    }
+
+    public function importhasil(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new HasilImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Hasil Penilaian Berhasil diimport');
+        return redirect()->route('hasil');
+    }
+
+    public function importuser(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        Excel::import(new UsersImport, request()->file('file'));
+
+        Alert::success('Informasi Pesan!', 'Pegawai Berhasil diimport');
+        return redirect()->route('pegawai');
+    }
+
+    public function exportuser()
+    {
+        return Excel::download(new UsersExport, 'daftarpegawai.xlsx');
+    }
+
+    public function exportaspek()
+    {
+        return Excel::download(new AspekExport, 'daftaraspek.xlsx');
+    }
+
+    public function exportkriteria()
+    {
+        return Excel::download(new KriteriaExport, 'daftarkriteria.xlsx');
+    }
+
+    public function exportpertanyaan()
+    {
+        return Excel::download(new PertanyaanExport, 'daftarpertanyaan.xlsx');
+    }
+
+    public function exporthasil()
+    {
+        return Excel::download(new HasilExport, 'daftarhasil.xlsx');
+    }
+
+    public function exportranking()
+    {
+        return Excel::download(new RankingExport, 'daftarperankingan.xlsx');
     }
 
     public function test()
@@ -428,9 +555,9 @@ class AdminController extends Controller
         // $nilaicf = $n->where('jenis', 'cf');
 
         // foreach ($n as $o) {
-            
+
         // }
-        
+
         // foreach ($nilaisf as $n_sf) {
         //     $sfaspek = $n_sf->aspek->sf;
         // }

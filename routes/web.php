@@ -83,10 +83,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('admin/perhitungan', [AdminController::class, 'perhitungan'])->name('perhitungan');
         //NT & Rangking
         Route::post('admin/perhitungan', [AdminController::class, 'storetotal'])->name('storetotal');
-        Route::get('admin/nt-rangking', [AdminController::class, 'ranking'])->name('ranking');
+        Route::get('admin/nt-ranking', [AdminController::class, 'ranking'])->name('ranking');
 
         Route::get('admin/pegawai', [AdminController::class, 'pegawai'])->name('pegawai');
         Route::post('admin/pegawai/{id}', [AdminController::class, 'destroypegawai'])->name('destroypegawai');
+
+        //import data
+        Route::post('admin/import', [AdminController::class, 'importuser'])->name('user.import');
+        Route::post('admin/seluruhaspek/import', [AdminController::class, 'importaspek'])->name('aspek.import');
+        Route::post('admin/kriteria/import', [AdminController::class, 'importkriteria'])->name('kriteria.import');
+        Route::post('admin/hasil/index/import', [AdminController::class, 'importhasil'])->name('hasil.import');
+        Route::post('admin/bobotpertanyaan/import', [AdminController::class, 'importpertanyaan'])->name('bobotpertanyaan.import');
+        Route::post('admin/perhitungan/import', [AdminController::class, 'importranking'])->name('ranking.import');
+
+        //export data
+        Route::get('admin/pegawai/export', [AdminController::class, 'exportuser'])->name('user.export');
+        Route::get('admin/seluruhaspek/export', [AdminController::class, 'exportaspek'])->name('aspek.export');
+        Route::get('admin/kriteria/export', [AdminController::class, 'exportkriteria'])->name('kriteria.export');
+        Route::get('admin/hasil/index/export', [AdminController::class, 'exporthasil'])->name('hasil.export');
+        Route::get('admin/bobotpertanyaan/export', [AdminController::class, 'exportpertanyaan'])->name('bobotpertanyaan.export');
+        Route::get('admin/perhitungan/export', [AdminController::class, 'exportranking'])->name('ranking.export');
         // Route::get('admin/test', [AdminController::class, 'test'])->name('test');
     });
 

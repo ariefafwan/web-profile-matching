@@ -10,6 +10,7 @@ class Kriteria extends Model
     use HasFactory;
     protected $guarded = [];
     protected $with = ['aspek'];
+    protected $fillable = ['aspek_id', 'name', 'jenis', 'nilai'];
 
     public function hasil()
     {
@@ -27,6 +28,6 @@ class Kriteria extends Model
         if ($jenis == "cf") {
             return 'Core Factor';
         }
-            return 'Secondary Factor';
+        return 'Secondary Factor';
     }
 }
