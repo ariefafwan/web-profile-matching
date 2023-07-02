@@ -9,6 +9,7 @@ class Aspek extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $fillable = ['name', 'bobot', 'cf', 'sf'];
 
     public function hasil()
     {

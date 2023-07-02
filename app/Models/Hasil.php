@@ -11,6 +11,7 @@ class Hasil extends Model
     use HasFactory;
     protected $guarded = [];
     protected $with = ['user', 'aspek', 'kriteria', 'bobot'];
+    protected $fillable = ['user_id', 'aspek_id', 'kriteria_id', 'nilai', 'bobot_id', 'n_bobot', 'jenis'];
 
     public function user()
     {
@@ -53,7 +54,6 @@ class Hasil extends Model
         if ($jenis == "cf") {
             return 'Core Factor';
         }
-            return 'Secondary Factor';
+        return 'Secondary Factor';
     }
-
 }

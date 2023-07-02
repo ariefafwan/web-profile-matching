@@ -10,6 +10,7 @@ class Ranking extends Model
     use HasFactory;
     protected $guarded = [];
     protected $with = ['user', 'aspek'];
+    protected $fillable = ['user_id', 'aspek_id', 'nt', 'b_aspek'];
 
     public function user()
     {
